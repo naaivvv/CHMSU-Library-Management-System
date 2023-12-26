@@ -37,7 +37,7 @@ Contributions are welcome! Feel free to open issues, submit pull requests, or pr
 This project is developed for educational purposes and is not intended for production use without thorough testing and customization to meet specific requirements.
 
 **Author:**
-Edwin Jr. P. Bayog
+Edwin Jr. P. Bayog,
 Computer Engineering Student
 
 Explore the power of efficient library management with CHMSU Library Management System (CLMS)!
