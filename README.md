@@ -33,9 +33,6 @@ The CHMSU Library Management System (CLMS) is a comprehensive web-based applicat
 **Contributing:**
 Contributions are welcome! Feel free to open issues, submit pull requests, or provide feedback to help improve the CHMSU Library Management System.
 
-**License:**
-This project is licensed under the [MIT License](LICENSE).
-
 **Disclaimer:**
 This project is developed for educational purposes and is not intended for production use without thorough testing and customization to meet specific requirements.
 
