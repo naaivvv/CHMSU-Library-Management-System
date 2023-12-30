@@ -8,7 +8,7 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/styles.css" async>
   <title>Library Management System</title>
 </head>
 <body>
@@ -17,8 +17,8 @@ session_start();
   include 'announcement-bar.php';
   include 'navigation-bar.php';
   ?>
-
-  <div class="main-content text-center">
+<div class="login-content">
+  <div class="main-content text-center login-form">
     <h2>Login</h2>
     <form style="max-width: 400px; margin: 0 auto;" action="login.php" method="post">
       <div class="mb-3">
@@ -48,6 +48,7 @@ session_start();
     ?>
     <br />
   </div>
+</div>
 
         <?php
         include 'footer.php';

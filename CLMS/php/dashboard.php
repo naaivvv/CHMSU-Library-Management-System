@@ -7,18 +7,14 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-// Set default values for filter and pagination
+// Set default values for filter, search, and pagination
 $filter = isset($_POST['filter']) ? $_POST['filter'] : 'all';
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
-$itemsPerPage = 10; // Set the number of items to show per page
-
-// Calculate the offset for pagination
-$offset = ($page - 1) * $itemsPerPage;
+$search = isset($_POST['search']) ? $_POST['search'] : '';
 
 // Get logged-in user's student_id
 $student_id = $_SESSION['student_id'];
 
-// Modify your SQL query to include filtering and pagination
+// Modify your SQL query to include filtering and searching
 $sql = "SELECT * 
         FROM tbl_book 
         WHERE student_id = ?";
@@ -28,16 +24,41 @@ if ($filter !== 'all') {
     $sql .= " AND status = ?";
 }
 
-$sql .= " ORDER BY date_borrowed DESC LIMIT ?, ?";
+// Apply search if the search term is not empty
+if (!empty($search)) {
+    $sql .= " AND (booktitle LIKE ? OR author LIKE ?)";
+}
+
+$sql .= " ORDER BY date_borrowed DESC";
 
 $stmt = $conn->prepare($sql);
 
-// Bind parameters based on the filter
+// Initialize an array to store the bind parameters and types
+$bindParams = [];
+$bindParamTypes = "s";
+
+// Always bind the student_id
+$bindParams[] = &$student_id;
+
+// Apply filter if it's not set to 'all'
 if ($filter !== 'all') {
-    $stmt->bind_param("ssii", $student_id, $filter, $offset, $itemsPerPage);
-} else {
-    $stmt->bind_param("sii", $student_id, $offset, $itemsPerPage);
+    $bindParams[] = &$filter;
+    $bindParamTypes .= "s";
 }
+
+// Apply search if the search term is not empty
+if (!empty($search)) {
+    $searchTerm = "%" . $search . "%";
+    $bindParams[] = &$searchTerm;
+    $bindParams[] = &$searchTerm;
+    $bindParamTypes .= "ss";
+}
+
+// Build the parameter string for bind_param dynamically
+$bindParams = array_merge([$bindParamTypes], $bindParams);
+
+// Use call_user_func_array to bind the parameters dynamically
+call_user_func_array(array($stmt, 'bind_param'), $bindParams);
 
 function getBookCount($status)
 {
@@ -60,6 +81,7 @@ function getBookCount($status)
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,7 +89,7 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css" async>
     <title>Library Management System</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -128,6 +150,18 @@ $result = $stmt->get_result();
                     </div>
                 </div>
             </form>
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <form method="post" action="dashboard.php" class="mb-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search..." name="search" value="<?php echo htmlspecialchars($search); ?>">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table">
@@ -162,33 +196,9 @@ $result = $stmt->get_result();
                                     }
                                 }
                                 $stmt->close();
-                                $conn->close();
                                 ?>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mt-3">
-                    <?php
-                    // Display pagination links
-                    $totalPages = ceil($result->num_rows / $itemsPerPage);
-
-                    if ($totalPages > 1) {
-                        echo "<p class='mb-1'>Page $page of $totalPages</p>";
-                        echo "<div class='btn-group' role='group'>";
-
-                        if ($page > 1) {
-                            echo "<a href='dashboard.php?page=" . ($page - 1) . "&filter=$filter' class='btn btn-secondary'>Previous</a>";
-                        }
-
-                        if ($page < $totalPages) {
-                            echo "<a href='dashboard.php?page=" . ($page + 1) . "&filter=$filter' class='btn btn-secondary'>Next</a>";
-                        }
-
-                        echo "</div>";
-                    }
-                    ?>
                     </div>
                 </div>
             </div>

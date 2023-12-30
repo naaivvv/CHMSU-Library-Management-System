@@ -80,7 +80,7 @@ $colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2'];
     include 'navigation-bar-dashboard.php';
     ?>
 
-    <div class="main-content text-center">
+    <div class="container text-center mt-5 mb-5">
         <h2>Borrow Books</h2>
 
         <div class="container-fluid">
@@ -89,19 +89,21 @@ $colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2'];
                 <div class="card-header">
                     All Books in Inventory
                 </div>
-                <div class="card-body">
+                <div class="card-body mt-4 mb-4">
                     <div class="row">
                         <?php if (!empty($books)): ?>
                             <?php foreach ($books as $index => $book): ?>
                                 <?php
+                                // Check if the book is available
+                                if ($book['available'] > 0):
                                     // Calculate color index using modulo to loop through color schemes
                                     $colorIndex = $index % count($colorSchemes);
                                     $color = $colorSchemes[$colorIndex];
                                     // Calculate image index using modulo to loop through the three available images (0.png, 1.png, 2.png)
                                     $imageIndex = $index % 4;
                                     $imagePath = "../img/{$imageIndex}.png";
-                                ?>
-                                <div class="col-md-4 mb-4">
+                            ?>
+                                <div class="col-md-3 mb-4 card-col">
                                     <!-- Wrap the card content in an anchor tag -->
                                     <a href="#" class="card h-100 shadow card-borrow text-decoration-none"
                                     style="background-color: <?php echo $color; ?>; color: white; border: none;"
@@ -131,6 +133,7 @@ $colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2'];
                                             </div>
                                         </div>
                                     </a>
+
 
                                     <!-- Modal for Borrow Confirmation -->
                                     <div class="modal fade" id="borrowModal<?php echo $index; ?>" tabindex="-1" role="dialog" aria-labelledby="borrowModalLabel" aria-hidden="true">
@@ -210,7 +213,8 @@ $colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2'];
 
                                     </script>
                                 </div>
-                            <?php endforeach; ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
                         <?php else: ?>
                             <p>No books in inventory.</p>
                         <?php endif; ?>

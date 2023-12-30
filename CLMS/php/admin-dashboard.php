@@ -8,36 +8,85 @@ if (!isset($_SESSION['username'])) {
 }
 
 // Set default values for filter and pagination
+$itemsPerPage = isset($_POST['itemsPerPage']) ? $_POST['itemsPerPage'] : 20;
 $filter = isset($_POST['filter']) ? $_POST['filter'] : 'all';
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
-$itemsPerPage = 10; // Set the number of items to show per page
 
 // Calculate the offset for pagination
 $offset = ($page - 1) * $itemsPerPage;
 
-// Modify your SQL query to include filtering and pagination
-$sql = "SELECT * FROM tbl_book";
+// Check if the search form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['search'])) {
+    $search = '%' . $_POST['search'] . '%';
 
-// Apply filter if it's not set to 'all'
-if ($filter !== 'all') {
-    $sql .= " WHERE status = ?";
-}
+    $sql = "SELECT * FROM tbl_book WHERE 
+            book_id LIKE ? OR
+            booktitle LIKE ? OR
+            author LIKE ? OR
+            student_id LIKE ? OR
+            firstname LIKE ? OR
+            lastname LIKE ? OR
+            email LIKE ? OR
+            course LIKE ? OR
+            date_borrowed LIKE ? OR
+            date_returned LIKE ? OR
+            status LIKE ? OR
+            remarks LIKE ?
+            ORDER BY date_borrowed DESC LIMIT ?, ?";
 
-$sql .= " ORDER BY date_borrowed DESC LIMIT ?, ?";
+    $stmt = $conn->prepare($sql);
 
-$stmt = $conn->prepare($sql);
+    // Check if the prepare statement was successful
+    if (!$stmt) {
+        die('Prepare failed: ' . htmlspecialchars($conn->error));
+    }
 
-// Check if the prepare statement was successful
-if (!$stmt) {
-    die('Prepare failed: ' . htmlspecialchars($conn->error));
-}
-
-// Bind parameters based on the filter
-if ($filter !== 'all') {
-    $stmt->bind_param("sii", $filter, $offset, $itemsPerPage);
+    // Bind parameters for search
+    $stmt->bind_param(
+        "ssssssssssssii",
+        $search,
+        $search,
+        $search,
+        $search,
+        $search,
+        $search,
+        $search,
+        $search,
+        $search,
+        $search,
+        $search,
+        $search,
+        $offset,
+        $itemsPerPage
+    );
 } else {
-    $stmt->bind_param("ii", $offset, $itemsPerPage);
+    // If search form is not submitted, use the existing query with filter
+    $sql = "SELECT * FROM tbl_book";
+
+    // Apply filter if it's not set to 'all'
+    if ($filter !== 'all') {
+        $sql .= " WHERE status = ?";
+    }
+
+    $sql .= " ORDER BY date_borrowed DESC LIMIT ?, ?";
+
+    $stmt = $conn->prepare($sql);
+
+    // Check if the prepare statement was successful
+    if (!$stmt) {
+        die('Prepare failed: ' . htmlspecialchars($conn->error));
+    }
+
+    // Bind parameters based on the filter
+    if ($filter !== 'all') {
+        $stmt->bind_param("sii", $filter, $offset, $itemsPerPage);
+    } else {
+        $stmt->bind_param("ii", $offset, $itemsPerPage);
+    }
 }
+
+$stmt->execute();
+$result = $stmt->get_result();
 
 function getBookCount($status)
 {
@@ -63,8 +112,6 @@ function getBookCount($status)
     }
 }
 
-$stmt->execute();
-$result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -262,6 +309,7 @@ $result = $stmt->get_result();
                 </div>
             </div>
             <form method="post" action="admin-dashboard.php" class="mb-3">
+                <input type="hidden" name="itemsPerPage" value="<?php echo $itemsPerPage; ?>">
                 <div class="row g-3">
                     <div class="col-auto">
                         <label for="filter" class="form-label">Filter by Status:</label>
@@ -278,6 +326,18 @@ $result = $stmt->get_result();
                     </div>
                 </div>
             </form>
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <form method="post" action="admin-dashboard.php" class="mb-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search..." name="search">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table">
@@ -326,33 +386,31 @@ $result = $stmt->get_result();
                                     }
                                 }
                                 $stmt->close();
-                                $conn->close();
                                 ?>
+                                <div class="row">
+                                    <div class="col-md-12 mt-3">
+                                    <?php
+                                    $totalPages = ceil(getBookCount($filter) / $itemsPerPage);
+
+                                    if ($totalPages > 1) {
+                                        echo "<p class='mb-1'>Page $page of $totalPages</p>";
+                                        echo "<div class='btn-group' role='group'>";
+                                    
+                                        if ($page > 1) {
+                                            echo "<a href='admin-dashboard.php?page=" . ($page - 1) . "&filter=$filter' class='btn btn-secondary'>Previous</a>";
+                                        }
+                                    
+                                        if ($page < $totalPages) {
+                                            echo "<a href='admin-dashboard.php?page=" . ($page + 1) . "&filter=$filter' class='btn btn-secondary'>Next</a>";
+                                        }
+                                    
+                                        echo "</div>";
+                                    }
+                                    ?>
+                                    </div>
+                                </div>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mt-3">
-                    <?php
-                    // Display pagination links
-                    $totalPages = ceil($result->num_rows / $itemsPerPage);
-
-                    if ($totalPages > 1) {
-                        echo "<p class='mb-1'>Page $page of $totalPages</p>";
-                        echo "<div class='btn-group' role='group'>";
-
-                        if ($page > 1) {
-                            echo "<a href='dashboard.php?page=" . ($page - 1) . "&filter=$filter' class='btn btn-secondary'>Previous</a>";
-                        }
-
-                        if ($page < $totalPages) {
-                            echo "<a href='dashboard.php?page=" . ($page + 1) . "&filter=$filter' class='btn btn-secondary'>Next</a>";
-                        }
-
-                        echo "</div>";
-                    }
-                    ?>
                     </div>
                 </div>
             </div>

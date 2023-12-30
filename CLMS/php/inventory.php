@@ -10,7 +10,7 @@ if (!isset($_SESSION['username'])) {
 // Set default values for filter and pagination
 $filter = isset($_POST['filter']) ? $_POST['filter'] : 'all';
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
-$itemsPerPage = 10; // Set the number of items to show per page
+$itemsPerPage = 999; // Set the number of items to show per page
 
 // Calculate the offset for pagination
 $offset = ($page - 1) * $itemsPerPage;
@@ -89,6 +89,30 @@ function displayBookshelfCards($conn)
         }
     }
 }
+if (isset($_POST['custom_search'])) {
+    $custom_search = '%' . $_POST['custom_search'] . '%';
+
+    // Modify your SQL query to include the customized search condition
+    $sql = "SELECT * FROM tbl_inventory WHERE booktitle LIKE ? OR author LIKE ? OR bookshelf LIKE ? ORDER BY date_borrowed DESC LIMIT ?, ?";
+
+    $stmt = $conn->prepare($sql);
+
+    // Check if the prepare statement was successful
+    if (!$stmt) {
+        die('Prepare failed: ' . htmlspecialchars($conn->error));
+    }
+
+    // Bind parameters for the search query
+    $stmt->bind_param("sssii", $custom_search, $custom_search, $custom_search, $offset, $itemsPerPage);
+
+    // Execute the search query
+    $stmt->execute();
+    $result = $stmt->get_result();
+} else {
+    // Use the existing search handling code if the custom search is not triggered
+    $stmt->execute();
+    $result = $stmt->get_result();
+}
 
 $stmt->execute();
 $result = $stmt->get_result();
@@ -126,49 +150,49 @@ $result = $stmt->get_result();
                         <label for="book_id" class="form-label visually-hidden">Book ID</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                            <input type="text" class="form-control" id="book_id" name="book_id">
+                            <input type="text" class="form-control" id="book_id" name="book_id" placeholder="Book ID">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="booktitle" class="form-label visually-hidden">Book Title</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-book"></i></span>
-                            <input type="text" class="form-control" id="booktitle" name="booktitle">
+                            <input type="text" class="form-control" id="booktitle" name="booktitle" placeholder="Book Title">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="author" class="form-label visually-hidden">Author</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-pen"></i></span>
-                            <input type="text" class="form-control" id="author" name="author">
+                            <input type="text" class="form-control" id="author" name="author" placeholder="Author">
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="bookshelf" class="form-label visually-hidden">Bookshelf</label>
+                        <label for="bookshelf" class="form-label visually-hidden">Bookshelf No.</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-book-open"></i></span>
-                            <input type="text" class="form-control" id="bookshelf" name="bookshelf">
+                            <input type="text" class="form-control" id="bookshelf" name="bookshelf" placeholder="Bookshelf No.">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="quantity" class="form-label visually-hidden">Quantity</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-list-ol"></i></span>
-                            <input type="number" class="form-control" id="quantity" name="quantity">
+                            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity">
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="available" class="form-label visually-hidden">Available Books:</label>
+                        <label for="available" class="form-label visually-hidden">Available Books</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-check"></i></span>
-                            <input type="number" class="form-control" id="available" name="available" disabled>
+                            <input type="number" class="form-control" id="available" name="available" placeholder="Available Books" disabled>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="borrowed" class="form-label visually-hidden">Borrowed Books:</label>
+                        <label for="borrowed" class="form-label visually-hidden">Borrowed Books</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-exchange-alt"></i></span>
-                            <input type="number" class="form-control" id="borrowed" name="borrowed" disabled>
+                            <input type="number" class="form-control" id="borrowed" name="borrowed" placeholder="Borrowed Books" disabled>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Insert Book</button>
@@ -192,49 +216,49 @@ $result = $stmt->get_result();
                         <label for="update_book_id" class="form-label visually-hidden">Book ID</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                            <input type="text" class="form-control" id="update_book_id" name="book_id">
+                            <input type="text" class="form-control" id="update_book_id" name="book_id" placeholder="Book ID">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="update_booktitle" class="form-label visually-hidden">Book Title</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-book"></i></span>
-                            <input type="text" class="form-control" id="update_booktitle" name="booktitle">
+                            <input type="text" class="form-control" id="update_booktitle" name="booktitle" placeholder="Book Title">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="update_author" class="form-label visually-hidden">Author</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-pen"></i></span>
-                            <input type="text" class="form-control" id="update_author" name="author">
+                            <input type="text" class="form-control" id="update_author" name="author" placeholder="Author">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="update_bookshelf" class="form-label visually-hidden">Bookshelf No.</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-book-open"></i></span>
-                            <input type="text" class="form-control" id="update_bookshelf" name="bookshelf">
+                            <input type="text" class="form-control" id="update_bookshelf" name="bookshelf" placeholder="Bookshelf No.">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="update_quantity" class="form-label visually-hidden">Quantity</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-list-ol"></i></span>
-                            <input type="number" class="form-control" id="update_quantity" name="quantity">
+                            <input type="number" class="form-control" id="update_quantity" name="quantity" placeholder="Quantity">
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="update_available" class="form-label visually-hidden">Available Books:</label>
+                        <label for="update_available" class="form-label visually-hidden">Available Books</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-check"></i></span>
-                            <input type="number" class="form-control" id="update_available" name="available" disabled>
+                            <input type="number" class="form-control" id="update_available" name="available" placeholder="Available Books:" disabled>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="update_borrowed" class="form-label visually-hidden">Borrowed Books:</label>
+                        <label for="update_borrowed" class="form-label visually-hidden">Borrowed Books</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-exchange-alt"></i></span>
-                            <input type="number" class="form-control" id="update_borrowed" name="borrowed" disabled>
+                            <input type="number" class="form-control" id="update_borrowed" name="borrowed" placeholder="Borrowed Books" disabled>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Update</button>
@@ -289,6 +313,18 @@ $result = $stmt->get_result();
                     </div>
                 </div>
             </form>
+            <div class="row mb-3">
+                <div class="col-md-12">
+                <form method="post" action="inventory.php" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search..." name="custom_search">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+                </div>
+            </div>
                 <div class="row">
                     <div class="col-md-12">
                     <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#registrationModal">
@@ -331,7 +367,6 @@ $result = $stmt->get_result();
                                     }
                                 }
                                 $stmt->close();
-                                $conn->close();
                                 ?>
                             </tbody>
                         </table>

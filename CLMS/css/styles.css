@@ -25,7 +25,7 @@
   
   .navbar {
     background-color: white;
-    padding: 15px 0;
+    padding: 8px 0;
   }
   
   #logo {
@@ -50,13 +50,6 @@
   
   .navbar-nav .nav-link {
     padding: 10px 15px;
-  }
-  
-  .main-content {
-    text-align: center;
-    margin: 50px auto;
-    max-width: 400px;
-    margin-bottom: 10px;
   }
   
   .registration-link {
@@ -106,24 +99,65 @@
 
   .main-content {
     text-align: center;
-    margin: 50px auto;
-    max-width: 900px;
-    margin-bottom: 80px;
+    padding-top:20px;
   }
 
   .error-message {
     color: #d61c2f;
-    padding: 10px; 
     margin-top: 10px;
 }
 
 .success-message {
   color: #0b9946;
-  padding: 10px; 
   margin-top: 10px;
 }
 
 .card-img-borrow {
   object-fit: cover;
   height: 100%;
+}
+
+.login-content {
+  min-height:80vh;
+  background-image: url('../img/index_bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover; 
+  background-position: center;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .login-content {
+    background-size: cover; /* Adjust properties for smaller screens */
+  }
+}
+
+.login-form {
+  width: 600px;
+  background-color: #ffffff;
+  border-radius: 10px; 
+  padding: 50px 30px 30px 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+}
+
+/* Adjust the styles for smaller screens if needed */
+@media (max-width: 768px) {
+  .login-form {
+    width: 80%; /* Adjust the width for smaller screens */
+  }
+}
+
+.card-col {
+  height:200px;
+}
+.admin-profile {
+  min-height:70vh;
+}
+
+.user-profile {
+  min-height:70vh;
 }

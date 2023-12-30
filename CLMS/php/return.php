@@ -60,7 +60,7 @@ $colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css" async>
     <title>Library Management System</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -85,7 +85,7 @@ $colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2'];
     include 'navigation-bar-dashboard.php';
     ?>
 
-    <div class="main-content text-center">
+    <div class="container text-center mt-5 mb-5">
         <h2>Return Books</h2>
 
         <div class="container-fluid">
@@ -94,7 +94,7 @@ $colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2'];
                 <div class="card-header">
                     All Borrowed Books
                 </div>
-                <div class="card-body">
+                <div class="card-body mt-4 mb-4">
                     <div class="row">
                         <?php if (!empty($books)): ?>
                             <!-- Inside the loop where you display books -->
@@ -107,7 +107,7 @@ $colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2'];
                                     $imageIndex = $index % 4;
                                     $imagePath = "../img/{$imageIndex}.png";
                                 ?>
-                                <div class="col-md-4 mb-4">
+                                <div class="col-md-3 mb-4 card-col">
                                     <!-- Wrap the card content in an anchor tag -->
                                     <a href="#" class="card h-100 shadow card-borrow text-decoration-none"
                                         style="background-color: <?php echo $color; ?>; color: white; border: none;"

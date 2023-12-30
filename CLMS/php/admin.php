@@ -17,8 +17,8 @@ session_start();
   include 'announcement-bar.php';
   include 'navigation-bar.php';
   ?>
-
-  <div class="main-content text-center">
+<div class="login-content">
+  <div class="main-content text-center login-form">
     <h2>Login as Administrator</h2>
     <form style="max-width: 400px; margin: 0 auto;" action="admin-login.php" method="post">
       <div class="mb-3">
@@ -39,7 +39,6 @@ session_start();
         <button type="submit" class="btn btn-primary">Login</button>
       </div>
     </form>
-    <p class="mt-3">&nbsp;</p>
     <?php
         if (isset($_SESSION['error_message'])) {
                                 echo "<p class='error-message'>".$_SESSION['error_message']."</p>";
@@ -48,6 +47,7 @@ session_start();
     ?>
     <br />
   </div>
+</div>
 
         <?php
         include 'footer.php';

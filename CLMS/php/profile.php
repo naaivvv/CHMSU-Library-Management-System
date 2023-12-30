@@ -38,7 +38,7 @@ function getUserData($conn, $username) {
     include 'announcement-bar.php';
     include 'navigation-bar-dashboard.php';
     ?>
-    <div class="main-content text-center">
+    <div class="main-content text-center user-profile">
   <h2>Update Profile</h2>
   <form style="max-width: 400px; margin: 0 auto;" action="update-profile.php" method="post">
     <div class="mb-3">
