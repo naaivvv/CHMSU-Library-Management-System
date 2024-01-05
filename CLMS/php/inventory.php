@@ -211,7 +211,7 @@ $result = $stmt->get_result();
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="updateForm" method="post" action="admin-update-inventory.php">
+                <form id="updateForm" method="post" action="admin-update-inventory.php" onsubmit="enableDisabledFields()">
                     <div class="mb-3">
                         <label for="update_book_id" class="form-label visually-hidden">Book ID</label>
                         <div class="input-group">
@@ -267,6 +267,13 @@ $result = $stmt->get_result();
         </div>
     </div>
 </div>
+<script>
+    function enableDisabledFields() {
+        // Enable the disabled fields before form submission
+        document.getElementById('update_available').disabled = false;
+        document.getElementById('update_borrowed').disabled = false;
+    }
+</script>
         <div class="row">
             <div class="col-md-12">
                 <div class="d-flex justify-content-end">

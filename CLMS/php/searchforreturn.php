@@ -33,19 +33,50 @@ if ($userStmt) {
     exit();
 }
 
-// Fetch all borrowed books from tbl_book
-$sql = "SELECT b.*, i.quantity, i.borrowed, i.available FROM tbl_book b
-        JOIN tbl_inventory i ON b.book_id = i.book_id
-        WHERE b.status = 'Borrowed' AND b.student_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $userDetails['student_id']);
-$stmt->execute();
-$result = $stmt->get_result();
-$books = [];
+// Check if the search parameter is set
+if (isset($_GET['search'])) {
+    $searchTerm = '%' . $_GET['search'] . '%';
+    // Modify the SQL query to include the search condition
+    $sql = "SELECT b.*, i.quantity, i.borrowed, i.available FROM tbl_book b
+            JOIN tbl_inventory i ON b.book_id = i.book_id
+            WHERE b.status = 'Borrowed' AND b.student_id = ? AND (i.booktitle LIKE ? OR i.author LIKE ?)";
+    $stmt = $conn->prepare($sql);
 
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $books[] = $row;
+    if ($stmt) {
+        $stmt->bind_param("iss", $userDetails['student_id'], $searchTerm, $searchTerm);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $books[] = $row;
+            }
+        } else {
+            // Handle case where no books match the search
+            $searchMessage = "No books found matching the search criteria.";
+        }
+
+        $stmt->close();
+    } else {
+        // Handle case where statement preparation fails
+        echo "Error: " . $conn->error;
+        exit();
+    }
+} else {
+    // If no search parameter, fetch all borrowed books as before
+    $sql = "SELECT b.*, i.quantity, i.borrowed, i.available FROM tbl_book b
+            JOIN tbl_inventory i ON b.book_id = i.book_id
+            WHERE b.status = 'Borrowed' AND b.student_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userDetails['student_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $books = [];
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $books[] = $row;
+        }
     }
 }
 

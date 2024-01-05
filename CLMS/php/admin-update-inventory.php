@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $author = $_POST['author'];
     $bookshelf = $_POST['bookshelf'];
     $quantity = $_POST['quantity'];
-    $available = $_POST['available'];
+    $available = $_POST['quantity'] - $_POST['borrowed'];
     $borrowed = $_POST['borrowed'];
 
     // Prepare an update statement for tbl_inventory

@@ -82,6 +82,14 @@ $colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2'];
 
     <div class="container text-center mt-5 mb-5">
         <h2>Borrow Books</h2>
+        <form class="form-inline mt-3 mb-3" method="GET" action="search.php">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search books..." name="search">
+                <button class="btn btn-outline-primary" type="submit">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </form>
 
         <div class="container-fluid">
             <!-- Use container-fluid to make the container full-width -->
