@@ -14,8 +14,6 @@ The CHMSU Library Management System (CLMS) is a comprehensive web-based applicat
 - **Bookshelf Organization:** Organizes books based on bookshelves, providing a systematic approach to book storage.
 - **Color-Coded Interface:** Utilizes an intuitive color-coded interface to enhance user experience and visual appeal.
 - **Interactive Dashboard:** Presents a dynamic dashboard that displays borrowed books, encouraging seamless book return processes.
-- **Announcement Bar:** Keeps users informed through an announcement bar for important updates and notices.
-- **Responsive Design:** Ensures compatibility with various devices for accessibility on desktops, tablets, and mobile phones.
 - **Modal Confirmations:** Utilizes modal confirmations for actions like book returns, enhancing user interaction.
 
 **How to Use:**
