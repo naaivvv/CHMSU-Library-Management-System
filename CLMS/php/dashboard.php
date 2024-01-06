@@ -175,6 +175,7 @@ $result = $stmt->get_result();
                                     <th scope="col">Date Returned</th>
                                     <th scope="col">Deadline</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Fines</th>
                                     <th scope="col">Remarks</th>
                                 </tr>
                             </thead>
@@ -191,6 +192,7 @@ $result = $stmt->get_result();
                                         echo "<td>" . $row["date_returned"] . "</td>";
                                         echo "<td>" . $row["deadline"] . "</td>";
                                         echo "<td>" . $row["status"] . "</td>";
+                                        echo "<td>" . $row["fine"] . "</td>";
                                         echo "<td>" . $row["remarks"] . "</td>";
                                         echo "</tr>";
                                     }

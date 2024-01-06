@@ -107,6 +107,25 @@ function getUserData($conn, $username) {
         </div>
     </div>
     <div class="mb-3">
+            <label for="age" class="form-label visually-hidden">Age</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="number" class="form-control" id="age" placeholder="Enter your age" name="age" value="<?php echo $userData['age']; ?>">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="gender" class="form-label visually-hidden">Gender</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                <select class="form-control" id="gender" name="gender">
+                    <option value="Male" <?php if ($userData['gender'] === 'Male') echo 'selected'; ?>>Male</option>
+                    <option value="Female" <?php if ($userData['gender'] === 'Female') echo 'selected'; ?>>Female</option>
+                    <option value="Others" <?php if ($userData['gender'] === 'Others') echo 'selected'; ?>>Others</option>
+                </select>
+            </div>
+        </div>
+    <div class="mb-3">
         <label for="email" class="form-label visually-hidden">Email</label>
         <div class="input-group">
             <span class="input-group-text"><i class="fas fa-envelope"></i></span>

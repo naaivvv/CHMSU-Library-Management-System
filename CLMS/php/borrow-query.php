@@ -80,7 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "Error preparing insert statement: " . $conn->error;
                     exit();
                 }
-
                 echo "Book successfully borrowed!";
                 header("location: borrow.php");
                 exit();

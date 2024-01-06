@@ -43,6 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $resultUpdateBook = $stmtUpdateBook->execute();
 
                 if ($resultUpdateBook) {
+                    // Calculate and update fines
+                    include 'calculate-fines.php';
+                    calculateFine($bookId);
+
                     echo "Book successfully returned!";
                     header("location: return.php");
                     exit();

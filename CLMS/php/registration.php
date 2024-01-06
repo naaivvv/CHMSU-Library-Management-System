@@ -87,6 +87,26 @@ session_start();
             </div>
         </div>
         <div class="mb-3">
+            <label for="age" class="form-label visually-hidden">Age</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="number" class="form-control" id="age" placeholder="Enter your age" name="age">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="gender" class="form-label visually-hidden">Gender</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                <select class="form-control" id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mb-3">
             <label for="email" class="form-label visually-hidden">Email</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
@@ -111,7 +131,7 @@ session_start();
             <button type="submit" class="btn btn-primary">Register</button>
         </div>
     </form>
-    <p class="mt-3">Already have an account? <a href="index.html" class="registration-link">Login here</a></p>
+    <p class="mt-3">Already have an account? <a href="index.php" class="registration-link">Login here</a></p>
     <?php
         if (isset($_SESSION['success_message'])) {
             echo "<p class='success-message'>".$_SESSION['success_message']."</p>";

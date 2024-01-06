@@ -85,6 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Attempt to execute the prepared statement
             if ($stmtUpdateAll->execute()) {
                 // Records updated successfully
+                include 'calculate-fines.php';
                 echo "Records updated successfully in tbl_book for all rows with the same student_id.";
                 // Records updated successfully for both tbl_book and tbl_user
                 header("location: admin-dashboard.php");

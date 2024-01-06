@@ -45,7 +45,7 @@ if ($result->num_rows > 0) {
 }
 
 // Color schemes
-$colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2'];
+$colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2', '#e83538'];
 ?>
 
 <!DOCTYPE html>
@@ -236,12 +236,23 @@ $colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2'];
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="termsModalLabel">Terms & Conditions</h5>
+                <h5 class="modal-title" id="termsModalLabel">Library Management System Terms & Conditions</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Your terms and conditions content goes here -->
-                <p>This is where you describe your terms and conditions.</p>
+                <p>Welcome to our Library Management System. By borrowing books from our library, you agree to the following terms and conditions:</p>
+
+                <h6>Borrowing:</h6>
+                <p>1. Books can be borrowed for a maximum period of 7 days.</p>
+                <p>2. A fine of PHP1 per day will be charged for each day a book is returned late.</p>
+                <p>3. It is the borrower's responsibility to return the book on time to avoid late fees.</p>
+
+                <h6>Return:</h6>
+                <p>1. Books must be returned to the proper bookshelf designated for returns.</p>
+                <p>2. Late fees will be assessed for books returned after the 7-day borrowing period.</p>
+
+                <h6>Lost or Damaged Books:</h6>
+                <p>In the case of lost or damaged books, the borrower will be responsible for the replacement cost of the book.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -249,6 +260,7 @@ $colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2'];
         </div>
     </div>
 </div>
+
 
     <?php 
     include 'footer.php';
@@ -260,7 +272,7 @@ $colorSchemes = ['#0C356A', '#0174BE', '#FFC436', '#E1AA74', '#29ADB2'];
         var bookCards = document.getElementById('book-card-container').getElementsByClassName('card-borrow');
 
         // New color schemes for hovering
-        var newColorSchemes = ['#061d3b', '#025f9c', '#ab8324', '#8f6e4d', '#1e797d'];
+        var newColorSchemes = ['#061d3b', '#025f9c', '#ab8324', '#8f6e4d', '#1e797d', '#b3292b'];
 
         // Store the original color of each card
         var originalColors = [];

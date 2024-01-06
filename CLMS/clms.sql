@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2023 at 07:28 AM
+-- Generation Time: Jan 06, 2024 at 12:33 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -62,30 +62,27 @@ CREATE TABLE `tbl_book` (
   `date_returned` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   `status` varchar(55) NOT NULL,
   `deadline` date NOT NULL,
-  `remarks` varchar(55) NOT NULL
+  `remarks` varchar(55) NOT NULL,
+  `fine` decimal(10,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_book`
 --
 
-INSERT INTO `tbl_book` (`id`, `student_id`, `book_id`, `course`, `firstname`, `lastname`, `email`, `booktitle`, `author`, `bookshelf`, `quantity`, `date_borrowed`, `date_returned`, `status`, `deadline`, `remarks`) VALUES
-(1, '320145', '123456', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'El Fili', 'jose r', '102', 5, '2023-12-23 08:22:00', '2023-12-26 06:50:28', 'Returned', '2023-12-31', 'Late'),
-(2, '123456', '123457', 'Bachelor of Science in Hospitality Management', 'fnone', 'lnone', 'acconey@gmail.com', 'bookone', 'authorone', '142', 78, '2023-12-23 08:38:52', '2023-12-26 06:50:28', 'Borrowed', '2023-12-31', 'Pending'),
-(3, '320145', '123458', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'test', 'test', '124', 20, '2023-12-23 08:43:25', '2023-12-26 06:50:28', 'Borrowed', '2023-12-31', 'Pending'),
-(4, '320145', '123458', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'test', 'test', '124', 20, '2023-11-05 08:43:25', '2023-12-26 06:50:28', 'Borrowed', '2023-12-31', 'Pending'),
-(5, '320145', '123459', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'test3', 'test3', '89', 112, '2023-10-02 08:43:25', '2023-12-26 06:50:28', 'Returned', '2023-12-31', 'On Time'),
-(6, '123456', '123460', 'Bachelor of Science in Hospitality Management', 'fnone', 'lnone', 'acconey@gmail.com', 'book2', 'author2', '142', 4, '2023-12-23 11:48:12', '2023-12-26 06:50:28', 'Borrowed', '2023-12-31', 'Pending'),
-(8, '320145', 'asdda', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'gsadasd', 'fasd', '234', 22, '2023-12-26 08:18:33', '2023-12-26 11:09:19', 'Returned', '2024-01-02', 'On Time'),
-(12, '123456', 'asdda', 'Bachelor of Science in Hospitality Management', 'fnone', 'lnone', 'acconey@gmail.com', 'gsadasd', 'fasd', '234', 22, '2023-12-26 11:08:39', '2023-12-26 11:09:19', 'Returned', '2024-01-02', 'On Time'),
-(13, '123456', '123460', 'Bachelor of Science in Hospitality Management', 'fnone', 'lnone', 'acconey@gmail.com', 'book2', 'author2', '142', 4, '2023-12-29 10:29:19', NULL, 'Borrowed', '2024-01-05', 'Pending'),
-(14, '123456', '123458', 'Bachelor of Science in Hospitality Management', 'fnone', 'lnone', 'acconey@gmail.com', 'test', 'test', '124', 20, '2023-12-29 10:29:24', NULL, 'Borrowed', '2024-01-05', 'Pending'),
-(15, '320145', '123460', 'NONE', 'Ivan', 'Bayog', 'test@gmail.com', 'book2', 'author2', '142', 4, '2023-12-29 10:30:15', NULL, 'Borrowed', '2024-01-05', 'Pending'),
-(16, '320145', '123457', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'bookone', 'authorone', '142', 78, '2023-12-29 10:32:59', NULL, 'Borrowed', '2024-01-05', 'Pending'),
-(17, '320145', '99999', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'ftest1', 'asd', 'asd', 23, '2023-12-29 11:50:03', NULL, 'Borrowed', '2024-01-05', 'Pending'),
-(18, '320145', '666666', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'acvxz', 'erasdfasd', '102', 66, '2023-12-29 11:50:10', NULL, 'Borrowed', '2024-01-05', 'Pending'),
-(19, '320145', '444444', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'ftest5', 'asdffs', '234', 1, '2023-12-29 11:50:19', '2023-12-29 12:11:51', 'Returned', '2024-01-05', 'On Time'),
-(20, '320145', '77777', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'ftest3', 'asdgsd', 'asd', 12, '2023-12-29 11:50:57', NULL, 'Borrowed', '2024-01-05', 'Pending');
+INSERT INTO `tbl_book` (`id`, `student_id`, `book_id`, `course`, `firstname`, `lastname`, `email`, `booktitle`, `author`, `bookshelf`, `quantity`, `date_borrowed`, `date_returned`, `status`, `deadline`, `remarks`, `fine`) VALUES
+(2, '123456', '123457', 'Bachelor of Science in Hospitality Management', 'fnone', 'lnone', 'accone@gmail.com', 'bookone', 'authorone', '142', 78, '2023-12-23 08:38:52', '2023-12-30 12:54:39', 'Borrowed', '2023-12-31', 'Pending', 0.00),
+(3, '123456', '123458', 'Bachelor of Science in Hospitality Management', 'fnone', 'lnone', 'accone@gmail.com', 'test', 'test', '124', 20, '2023-12-29 10:29:24', '0000-00-00 00:00:00', 'Borrowed', '2023-12-31', 'Pending', 0.00),
+(4, '123456', '123458', 'Bachelor of Science in Hospitality Management', 'fnone', 'lnone', 'accone@gmail.com', 'test', 'test', '124', 20, '2023-12-29 10:29:24', '0000-00-00 00:00:00', 'Borrowed', '2023-12-31', 'Pending', 0.00),
+(5, '320145', '123459', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'test3', 'test3', '89', 112, '2023-10-02 08:43:25', '2023-12-26 06:50:28', 'Returned', '2023-12-31', 'On Time', 0.00),
+(8, '320145', 'asdda', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'gsadasd', 'fasd', '234', 22, '2023-12-26 08:18:33', '2023-12-26 11:09:19', 'Returned', '2024-01-02', 'On Time', 0.00),
+(12, '123456', 'asdda', 'Bachelor of Science in Hospitality Management', 'fnone', 'lnone', 'accone@gmail.com', 'gsadasd', 'fasd', '234', 22, '2023-12-26 11:08:39', '2023-12-30 12:54:39', 'Returned', '2024-01-02', 'On Time', 0.00),
+(14, '123456', '123458', 'Bachelor of Science in Hospitality Management', 'fnone', 'lnone', 'accone@gmail.com', 'test', 'test', '124', 20, '2023-12-29 10:29:24', '0000-00-00 00:00:00', 'Borrowed', '2024-01-05', 'Pending', 0.00),
+(16, '320145', '123457', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'bookone', 'authorone', '142', 78, '2023-12-29 10:32:59', NULL, 'Borrowed', '2024-01-05', 'Pending', 0.00),
+(17, '320145', '99999', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'ftest1', 'asd', 'asd', 23, '2023-12-20 11:50:03', '2024-01-06 11:24:52', 'Returned', '2023-12-27', 'Late', 10.00),
+(18, '320145', '666666', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'acvxz', 'erasdfasd', '102', 66, '2023-12-20 11:50:10', '0000-00-00 00:00:00', 'Borrowed', '2024-01-05', 'Pending', 0.00),
+(19, '320145', '444444', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'ftest5', 'asdffs', '234', 1, '2023-12-29 11:50:19', '2024-01-15 12:11:51', 'Returned', '2024-01-05', 'Late', 0.00),
+(20, '320145', '77777', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test@gmail.com', 'ftest3', 'asdgsd', 'asd', 12, '2023-12-20 11:50:57', '2024-01-06 11:21:23', 'Returned', '2024-01-05', 'Late', 1.00);
 
 -- --------------------------------------------------------
 
@@ -113,16 +110,16 @@ CREATE TABLE `tbl_inventory` (
 INSERT INTO `tbl_inventory` (`id`, `book_id`, `booktitle`, `author`, `bookshelf`, `quantity`, `borrowed`, `available`, `date_borrowed`, `date_returned`) VALUES
 (1, '123456', 'El Fili', 'jose r', '102', 5, 1, 4, '2023-12-23 08:22:00', '2023-12-26 07:16:46'),
 (2, '123457', 'bookone', 'authorone', '142', 78, 2, 76, '2023-12-23 08:38:52', '2023-12-29 10:32:59'),
-(3, '123458', 'test', 'test', '124', 20, 3, 17, '2023-12-23 08:43:25', '2023-12-29 10:29:24'),
+(3, '123458', 'test', 'test', '124', 25, 3, 22, '2023-12-23 08:43:25', '2023-12-30 12:49:54'),
 (5, '123459', 'test3', 'test3', '89', 112, 1, 111, '2023-10-02 08:43:25', '2023-12-25 13:31:29'),
-(6, '123460', 'book2', 'author2', '142', 4, 3, 1, '2023-12-23 11:48:12', '2023-12-29 10:30:15'),
+(6, '123460', 'book2', 'author2', '142', 8, 4, 4, '2023-12-23 11:48:12', '2024-01-05 04:29:39'),
 (12, 'asdda', 'gsadasd', 'fasd', '234', 22, 0, 22, '2023-12-25 20:59:38', '2023-12-26 11:09:19'),
-(14, '99999', 'ftest1', 'asd', 'asd', 23, 1, 22, '2023-12-29 11:42:16', '2023-12-29 11:50:03'),
+(14, '99999', 'ftest1', 'asd', 'asd', 23, 0, 23, '2023-12-29 11:42:16', '2024-01-06 11:24:51'),
 (15, '888888', 'ftest2', 'asd', '234', 55, 0, 55, '2023-12-29 11:42:33', NULL),
-(16, '77777', 'ftest3', 'asdgsd', 'asd', 12, 1, 11, '2023-12-29 11:43:18', '2023-12-29 11:50:57'),
-(17, '666666', 'acvxz', 'erasdfasd', '102', 66, 1, 65, '2023-12-29 11:43:52', '2023-12-29 11:50:10'),
+(16, '77777', 'ftest3', 'asdgsd', 'asd', 12, 0, 12, '2023-12-29 11:43:18', '2024-01-06 11:21:23'),
+(17, '666666', 'acvxz', 'erasdfasd', '102', 70, 1, 69, '2023-12-29 11:43:52', '2023-12-30 12:41:51'),
 (18, '55555', 'ftest4', 'dfsfczxcs', '89', 3, 0, 3, '2023-12-29 11:44:27', NULL),
-(19, '444444', 'ftest5', 'asdffs', '234', 1, 0, 1, '2023-12-29 11:45:04', '2023-12-29 12:11:51');
+(19, '444444', 'ftest5', 'asdffs', '234', 2, 0, 2, '2023-12-29 11:45:04', '2023-12-30 12:33:59');
 
 -- --------------------------------------------------------
 
@@ -136,6 +133,8 @@ CREATE TABLE `tbl_user` (
   `course` varchar(255) NOT NULL,
   `firstname` varchar(55) NOT NULL,
   `lastname` varchar(55) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `age` int(3) NOT NULL,
   `username` varchar(55) NOT NULL,
   `password` varchar(55) NOT NULL,
   `email` varchar(55) NOT NULL
@@ -145,9 +144,10 @@ CREATE TABLE `tbl_user` (
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`id`, `student_id`, `course`, `firstname`, `lastname`, `username`, `password`, `email`) VALUES
-(2, '320145', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', 'test', 'test', 'test@gmail.com'),
-(3, '123456', 'Bachelor of Science in Hospitality Management', 'fnone', 'lnone', 'accone', 'accone', 'acconey@gmail.com');
+INSERT INTO `tbl_user` (`id`, `student_id`, `course`, `firstname`, `lastname`, `gender`, `age`, `username`, `password`, `email`) VALUES
+(2, '320145', 'Bachelor of Science in Information Systems', 'Ivan', 'Bayog', '', 0, 'test', 'test', 'test@gmail.com'),
+(3, '123456', 'Bachelor of Science in Hospitality Management', 'fnone', 'lnone', '', 0, 'accone', 'accone', 'accone@gmail.com'),
+(4, 'gtest', 'NONE', 'g', 'test', 'Female', 20, 'gtest', 'gtest', 'gtest@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -191,7 +191,7 @@ ALTER TABLE `tbl_admin`
 -- AUTO_INCREMENT for table `tbl_book`
 --
 ALTER TABLE `tbl_book`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `tbl_inventory`
@@ -203,7 +203,7 @@ ALTER TABLE `tbl_inventory`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

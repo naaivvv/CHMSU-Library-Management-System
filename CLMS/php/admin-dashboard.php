@@ -355,6 +355,7 @@ function getBookCount($status)
                                     <th scope="col">Date Returned</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Remarks</th>
+                                    <th scope="col">Fines</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -375,6 +376,7 @@ function getBookCount($status)
                                         echo "<td>" . $row["date_returned"] . "</td>";
                                         echo "<td>" . $row["status"] . "</td>";
                                         echo "<td>" . $row["remarks"] . "</td>";
+                                        echo "<td>" . $row["fine"] . "</td>";
                                         echo '<td width="200px">
                                                 <button class="btn btn-primary update-btn" data-toggle="modal" data-target="#updateModal" data-book-id="' . $row["book_id"] . '">Update</button>&nbsp;
                                                 <form method="post" action="admin-delete.php" style="display:inline;">
